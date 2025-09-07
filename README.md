@@ -1,8 +1,4 @@
-# 🏢 SIMBAK
-![Laravel](https://img.shields.io/badge/Laravel-10.x-red?style=flat-square&logo=laravel)
-![Bootstrap](https://img.shields.io/badge/Bootstrap-5.x-purple?style=flat-square&logo=bootstrap)
-![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
-![Status](https://img.shields.io/badge/Status-Active-success?style=flat-square)
+
 
 # 🏢 SIMBAK
 **Sistem Inventaris & Manajemen Barang Kecamatan**  
@@ -33,10 +29,13 @@ Aplikasi berbasis web untuk mengelola inventaris barang di tingkat kecamatan, di
 ## 🛠️ Instalasi
 
 Ikuti langkah-langkah berikut untuk menjalankan SIMBAK di lokal:
+Akun nya berikut
+Email: admin@example.com
+Password: admin123
 
 ### 1. Clone Repository
 ```bash
-git clone https://github.com/fazarprgmr/simbak.git
+git clone https://github.com/fazarprgmr/SIMBAK.git
 cd SIMBAK
 
 composer install
@@ -53,3 +52,9 @@ php artisan storage:link
 php artisan migrate --seed
 
 php artisan serve
+
+### 🏢 SIMBAK
+![Laravel](https://img.shields.io/badge/Laravel-10.x-red?style=flat-square&logo=laravel)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-5.x-purple?style=flat-square&logo=bootstrap)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
+![Status](https://img.shields.io/badge/Status-Active-success?style=flat-square)
