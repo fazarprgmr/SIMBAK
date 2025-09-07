@@ -68,7 +68,7 @@ Password: admin123
 ```
 
 ### 3. Tampilan Website
-<img width="1920" height="1080" alt="Screenshot 2025-09-07 202411" src="https://github.com/user-attachments/assets/cc26cf13-655c-4471-8c0b-c3d424d8e337" /><img width="1920" height="1080" alt="Screenshot 2025-09-07 202426" src="https://github.com/user-attachments/assets/8a0ab5ed-430d-46e9-ac22-aeecccba21c2" /><img width="1920" height="1080" alt="Screenshot 2025-09-07 202433" src="https://github.com/user-attachments/assets/d68c5ac1-73d2-49d7-abe2-c25484576ec2" /><img width="1920" height="1080" alt="Screenshot 2025-09-07 202440" src="https://github.com/user-attachments/assets/1d0c2483-9d40-479e-97e6-84c1456f083a" /><img width="1920" height="1080" alt="Screenshot 2025-09-07 202448" src="https://github.com/user-attachments/assets/cc26cf13-655c-4471-8c0b-c3d424d8e337" /><img width="1920" height="1080" alt="Screenshot 2025-09-07 202455" src="https://github.com/user-attachments/assets/cc26cf13-655c-4471-8c0b-c3d424d8e337" /><img width="1920" height="1080" alt="Screenshot 2025-09-07 202831" src="https://github.com/user-attachments/assets/cc26cf13-655c-4471-8c0b-c3d424d8e337" />
+
 <img width="1920" height="1080" alt="Screenshot 2025-09-07 202411" src="https://github.com/user-attachments/assets/42760b85-f95a-4bc9-bbf8-c18d91d0c54a" />
 <img width="1920" height="1080" alt="Screenshot 2025-09-07 202426" src="https://github.com/user-attachments/assets/819aa34b-eaec-4c45-b992-0b2287ed41bb" />
 <img width="1920" height="1080" alt="Screenshot 2025-09-07 202433" src="https://github.com/user-attachments/assets/9a08cea5-4186-431f-a2d9-9fbcff7e3861" />
