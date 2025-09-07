@@ -29,33 +29,41 @@ Aplikasi berbasis web untuk mengelola inventaris barang di tingkat kecamatan, di
 ## 🛠️ Instalasi
 
 Ikuti langkah-langkah berikut untuk menjalankan SIMBAK di lokal:
-Akun nya berikut
-Email: admin@example.com
-Password: admin123
+
 
 ### 1. Clone Repository
 ```bash
 git clone https://github.com/fazarprgmr/SIMBAK.git
 cd SIMBAK
-
+```
+```bash
 composer install
 npm install
 npm run dev
-
+```
+```bash
 cp .env.example .env
 Atur database
-
+```
+```bash
 php artisan key:generate
-
+```
+```bash
 php artisan storage:link
-
+```
+```bash
 php artisan migrate --seed
-
+```
+```bash
 php artisan serve
+```
+
 
 ### 2. Login Menggunakan Akun ini
+```bash
 Email: admin@example.com
 Password: admin123
+```
 
 ### 🏢 SIMBAK
 ![Laravel](https://img.shields.io/badge/Laravel-10.x-red?style=flat-square&logo=laravel)
