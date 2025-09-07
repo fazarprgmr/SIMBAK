@@ -53,6 +53,10 @@ php artisan migrate --seed
 
 php artisan serve
 
+### 2. Login Menggunakan Akun ini
+Email: admin@example.com
+Password: admin123
+
 ### 🏢 SIMBAK
 ![Laravel](https://img.shields.io/badge/Laravel-10.x-red?style=flat-square&logo=laravel)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-5.x-purple?style=flat-square&logo=bootstrap)
