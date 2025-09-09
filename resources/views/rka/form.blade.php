@@ -44,7 +44,7 @@
                         'beban' => 'Beban Persediaan',
                     ];
                 @endphp
-                
+
 
                 <div class="table-responsive">
                     <table class="table table-bordered align-middle">
@@ -73,7 +73,7 @@
                                             <input class="form-check-input" type="radio" name="{{ $key }}_mode"
                                                 value="detail"
                                                 {{ old("{$key}_mode", $rka->{"{$key}_mode"}) == 'detail' ? 'checked' : '' }}>
-                                                
+
                                             <label class="form-check-label">Detail</label>
                                         </div>
                                     </td>
@@ -117,6 +117,7 @@
             </div>
             <div class="card-footer text-end">
                 <button type="submit" class="btn btn-primary">Simpan</button>
+                <a href="{{ route('rka.index') }}" class="btn btn-secondary">Batal</a>
             </div>
         </div>
     </form>
@@ -137,21 +138,26 @@
                 const mode = getMode(key);
                 const detailInputs = document.querySelectorAll(`.detail-input-${key}`);
                 const totalInput = document.querySelector(`.total-input-${key}`);
+                const satuanSelect = document.querySelector(`select[name="${key}_satuan"]`);
 
                 if (key === 'beban') {
                     detailInputs.forEach(el => el.setAttribute('readonly', 'readonly'));
                     if (totalInput) totalInput.setAttribute('readonly', 'readonly');
+                    if (satuanSelect) satuanSelect.setAttribute('disabled', 'disabled');
                     return;
                 }
 
                 if (mode === 'detail') {
                     detailInputs.forEach(el => el.removeAttribute('readonly'));
                     if (totalInput) totalInput.setAttribute('readonly', 'readonly');
+                    if (satuanSelect) satuanSelect.removeAttribute('disabled');
                 } else {
                     detailInputs.forEach(el => el.setAttribute('readonly', 'readonly'));
                     if (totalInput) totalInput.removeAttribute('readonly');
+                    if (satuanSelect) satuanSelect.setAttribute('disabled', 'disabled');
                 }
             }
+
 
             function toggleInputsAll() {
                 sections.forEach(toggleInputsFor);
