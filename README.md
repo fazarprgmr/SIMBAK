@@ -59,11 +59,24 @@ php artisan serve
 ```
 
 
+
+
 ### 2. Login Menggunakan Akun ini
 ```bash
 Email: admin@example.com
 Password: admin123
 ```
+
+### 3. Tampilan Website
+
+<img width="1920" height="1080" alt="Screenshot 2025-09-07 202411" src="https://github.com/user-attachments/assets/42760b85-f95a-4bc9-bbf8-c18d91d0c54a" />
+<img width="1920" height="1080" alt="Screenshot 2025-09-07 202426" src="https://github.com/user-attachments/assets/819aa34b-eaec-4c45-b992-0b2287ed41bb" />
+<img width="1920" height="1080" alt="Screenshot 2025-09-07 202433" src="https://github.com/user-attachments/assets/9a08cea5-4186-431f-a2d9-9fbcff7e3861" />
+<img width="1920" height="1080" alt="Screenshot 2025-09-07 202440" src="https://github.com/user-attachments/assets/8f439c8f-e3dc-48d4-ae95-3978e634c2dd" />
+<img width="1920" height="1080" alt="Screenshot 2025-09-07 202448" src="https://github.com/user-attachments/assets/48fc1313-7e6b-40a1-b9b8-1a0293cfc13b" />
+<img width="1920" height="1080" alt="Screenshot 2025-09-07 202455" src="https://github.com/user-attachments/assets/2de9921a-59ef-4de6-8e00-15227f6cd271" />
+<img width="1920" height="1080" alt="Screenshot 2025-09-07 202831" src="https://github.com/user-attachments/assets/4a2c6480-9f6d-4e7d-ad6d-95dabe3f9063" />
+
 
 ### 🏢 SIMBAK
 ![Laravel](https://img.shields.io/badge/Laravel-10.x-red?style=flat-square&logo=laravel)
