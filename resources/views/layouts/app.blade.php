@@ -87,7 +87,7 @@
                     <div class="user-area dropdown float-right">
                         <a href="#" class="dropdown-toggle d-flex align-items-center" data-toggle="dropdown">
                             <img class="user-avatar rounded-circle"
-                                src="{{ Auth::user()->profile_photo ? asset('storage/' . Auth::user()->profile_photo) : asset('template/images/admin.jpg') }}"
+                                src="{{ Auth::user()->profile_photo ? asset('storage/' . Auth::user()->profile_photo) : asset('template/images/img-default.jpg') }}"
                                 alt="User Avatar">
                             <span class="ml-2">{{ Auth::user()->name ?? 'User' }}</span>
 
