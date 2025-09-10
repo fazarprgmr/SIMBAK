@@ -13,6 +13,7 @@ class Rka extends Model
 
 
     protected $fillable = [
+        'bulan',
         'kode_rekening',
         'uraian',
         'sub_uraian',

@@ -7,12 +7,49 @@
         @if ($rka->exists)
             @method('PUT')
         @endif
+        @php
+            $bulanSekarang = \Carbon\Carbon::now()->month; // integer
+            $bulanValue = old('bulan', $rka->bulan ?? $bulanSekarang);
+        @endphp
+
 
         <div class="card shadow-sm">
             <div class="card-header">
                 <h5 class="mb-0">{{ $rka->exists ? 'Edit' : 'Tambah' }} Data RKA</h5>
             </div>
             <div class="card-body">
+                <div class="mb-3">
+                    <label for="bulan" class="form-label">Bulan</label>
+                    <select name="bulan" id="bulan" class="form-control">
+                        <option value="">-- Pilih Bulan --</option>
+
+                        @foreach ([
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember',
+        ] as $num => $name)
+                            <option value="{{ $num }}" {{ $bulanValue == $num ? 'selected' : '' }}
+                                {{ $num > $bulanSekarang ? 'disabled' : '' }}>
+                                {{ $name }}
+                            </option>
+                        @endforeach
+                    </select>
+
+                    @error('bulan')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+
                 <div class="row g-3 mb-4">
                     <div class="col-md-5">
                         <label class="form-label">Kode Rekening</label>

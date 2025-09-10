@@ -20,7 +20,7 @@ class RkaController extends Controller
                 ->orWhere('uraian', 'like', "%$s%")
                 ->orWhere('sub_uraian', 'like', "%$s%"));
         }
-        $rkas = $q->orderBy('id', 'asc')->paginate(10)->withQueryString();
+        $rkas = $q->orderBy('bulan', 'asc')->paginate(10)->withQueryString();
         return view('rka.index', compact('rkas'));
     }
 
@@ -48,10 +48,11 @@ class RkaController extends Controller
         }
 
 
-        // Otomatis isi bulan & tahun
+        // Gunakan bulan yang dipilih user, kalau kosong fallback bulan sekarang
         $now = Carbon::now();
-        $data['bulan'] = $now->month;
+        $data['bulan'] = $r->bulan ?? $now->month;
         $data['tahun'] = $now->year;
+
 
         $data = Rka::withTotals($data);
         Rka::create($data);
@@ -78,10 +79,11 @@ class RkaController extends Controller
             }
         }
 
-        // Kalau mau update, bulan/tahun tetap sesuai tanggal update:
+        // Gunakan bulan yang dipilih user, kalau kosong fallback bulan sekarang
         $now = Carbon::now();
-        $data['bulan'] = $now->month;
+        $data['bulan'] = $r->bulan ?? $now->month;
         $data['tahun'] = $now->year;
+
 
         $data = Rka::withTotals($data);
         $rka->update($data);
@@ -124,8 +126,9 @@ class RkaController extends Controller
         $tahun = $request->get('tahun');
 
         $q = Rka::query();
-        if ($bulan) $q->whereMonth('created_at', $bulan);
-        if ($tahun) $q->whereYear('created_at', $tahun);
+        if ($bulan) $q->where('bulan', $bulan);
+        if ($tahun) $q->where('tahun', $tahun);
+
 
         $items = $q->orderBy('id', 'asc')->get();
 
@@ -150,7 +153,7 @@ class RkaController extends Controller
 
         $items = $q->orderBy('id', 'asc')->get();
 
-        // 🔥 Gunakan groupData supaya semua perhitungan konsisten
+        // Gunakan groupData supaya semua perhitungan konsisten
         $grouped = $this->groupData($items);
 
         $periode = $request->get('periode') ?: now()->format('Y-m');
@@ -174,17 +177,19 @@ class RkaController extends Controller
         $tahun = $request->get('tahun') ?? now()->year;
 
         $q = Rka::query();
-        $q->whereYear('created_at', $tahun)
-            ->whereMonth('created_at', $bulan);
+        $q->where('tahun', $tahun)
+            ->where('bulan', $bulan);
 
         $items = $q->orderBy('id', 'asc')->get();
 
 
-        // 🔥 Sama kayak exportPdf
+        // Sama kayak exportPdf
         $grouped = $this->groupData($items);
 
         $periodeText = strtoupper(
-            \Carbon\Carbon::createFromDate($tahun, $bulan, 1)->translatedFormat('F Y')
+            \Carbon\Carbon::createFromDate($tahun, $bulan, 1)
+                ->locale('id') // paksa bahasa Indonesia
+                ->translatedFormat('F Y')
         );
 
         return \Barryvdh\DomPDF\Facade\Pdf::loadView('rka.pdf', [
@@ -203,7 +208,7 @@ class RkaController extends Controller
         $tahun = $request->get('tahun') ?? now()->year;
 
         $q = Rka::query();
-        $q->whereYear('created_at', $tahun);
+        $q->where('tahun', $tahun);
 
         $items = $q->orderBy('id', 'asc')->get();
 
@@ -269,7 +274,7 @@ class RkaController extends Controller
                 $normalize($item, $sec);
             }
 
-            // 🔥 Mode Beban
+            // Mode Beban
             if ($item->beban_mode === 'total') {
                 // Ambil dari database langsung
                 $item->beban_total  = (float)($item->beban_total ?? 0);

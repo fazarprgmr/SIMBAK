@@ -190,7 +190,7 @@
                             <td>{{ $item->saldo_awal_satuan }}</td>
                             <td style="text-align:center;">
                                 {{ number_format($item->saldo_awal_harga, 0, ',', '.') }}</td>
-                            <td style="text-align:center;">{{ fmt($item->saldo_awal_total) }}</td>
+                            <td style="text-align:right;">{{ fmt($item->saldo_awal_total) }}</td>
                         @endif
 
                         {{-- Pembelian --}}
@@ -203,7 +203,7 @@
                             <td>{{ $item->pembelian_satuan }}</td>
                             <td style="text-align:center;">{{ number_format($item->pembelian_harga, 0, ',', '.') }}
                             </td>
-                            <td style="text-align:center;">{{ fmt($item->pembelian_total) }}</td>
+                            <td style="text-align:right;">{{ fmt($item->pembelian_total) }}</td>
                         @endif
 
                         {{-- Saldo Akhir --}}
@@ -216,7 +216,7 @@
                             <td>{{ $item->saldo_akhir_satuan }}</td>
                             <td style="text-align:center;">
                                 {{ number_format($item->saldo_akhir_harga, 0, ',', '.') }}</td>
-                            <td style="text-align:center;">{{ fmt($item->saldo_akhir_total) }}</td>
+                            <td style="text-align:right;">{{ fmt($item->saldo_akhir_total) }}</td>
                         @endif
 
                         {{-- Rusak --}}
@@ -228,7 +228,7 @@
                             <td>{{ fmtRusak($item->rusak_jumlah) }}</td>
                             <td>{{ $item->rusak_satuan }}</td>
                             <td style="text-align:center;">{{ fmtRusak($item->rusak_harga) }}</td>
-                            <td style="text-align:center;">{{ fmtRusak($item->rusak_total) }}</td>
+                            <td style="text-align:right;">{{ fmtRusak($item->rusak_total) }}</td>
                         @endif
 
                         {{-- Beban --}}
@@ -242,7 +242,7 @@
                             <td>{{ $item->beban_satuan }}</td>
                             <td style="text-align:center;">{{ number_format($item->beban_harga, 0, ',', '.') }}
                             </td>
-                            <td style="text-align:center;">{{ fmt($item->beban_total) }}</td>
+                            <td style="text-align:right;">{{ fmt($item->beban_total) }}</td>
                         @endif
 
                     </tr>

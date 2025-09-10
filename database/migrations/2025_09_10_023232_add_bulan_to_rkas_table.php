@@ -9,18 +9,17 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('rkas', function (Blueprint $table) {
-            $table->integer('bulan')->nullable()->after('id');
-            $table->integer('tahun')->nullable()->after('bulan');
+            $table->string('bulan', 2)->after('id'); // simpan '01' sampai '12'
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::table('rkas', function (Blueprint $table) {
-            $table->dropColumn(['bulan', 'tahun']);
+            $table->dropColumn('bulan');
         });
     }
 };
