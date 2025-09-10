@@ -22,7 +22,45 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet">
 </head>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <body>
+
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: "{{ session('success') }}",
+                timer: 2000,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
+
+    @if (session('success-update'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: "{{ session('success-update') }}",
+                timer: 2000,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
+
+    @if (session('ok'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: "{{ session('ok') }}",
+                timer: 2000,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
 
     <!-- Sidebar -->
     <aside id="left-panel" class="left-panel">
@@ -128,12 +166,126 @@
     <!-- /Main Panel -->
 
     {{-- Vendor JS --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    let form = this.closest('form');
+
+                    Swal.fire({
+                        title: 'Hapus Data?',
+                        text: "Data yang dihapus tidak bisa dikembalikan!",
+                        icon: 'question',
+                        iconColor: '#f39c12',
+                        showCancelButton: true,
+                        confirmButtonColor: '#e74c3c',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: '<i class="fa fa-trash"></i> Ya, Hapus!',
+                        cancelButtonText: 'Batal',
+                        background: '#fff',
+                        color: '#333',
+                        customClass: {
+                            popup: 'animated fadeInDown faster',
+                            title: 'fw-bold fs-5',
+                            confirmButton: 'px-4 py-2',
+                            cancelButton: 'px-4 py-2'
+                        }
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            Swal.fire({
+                                title: 'Menghapus...',
+                                text: 'Mohon tunggu sebentar.',
+                                allowOutsideClick: false,
+                                didOpen: () => {
+                                    Swal.showLoading()
+                                }
+                            });
+                            form.submit();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+
     <script src="{{ asset('template/vendors/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('template/vendors/popper.js/dist/umd/popper.min.js') }}"></script>
     <script src="{{ asset('template/vendors/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('template/assets/js/main.js') }}"></script>
     <script src="{{ asset('template/vendors/chart.js/dist/Chart.bundle.min.js') }}"></script>
     <script src="{{ asset('template/assets/js/init-scripts/chart-js/chartjs-init.js') }}"></script>
+
+    <script>
+        // ✅ Notifikasi Sukses
+        @if (session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: "{{ session('success') }}",
+                iconColor: '#2ecc71',
+                background: '#fff',
+                color: '#333',
+                timer: 2000,
+                showConfirmButton: false,
+                customClass: {
+                    popup: 'animated fadeInDown faster',
+                    title: 'fw-bold fs-5',
+                }
+            });
+        @endif
+
+        @if (session('success-update'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Data Diperbarui!',
+                text: "{{ session('success-update') }}",
+                iconColor: '#3498db',
+                background: '#fff',
+                color: '#333',
+                timer: 2000,
+                showConfirmButton: false,
+                customClass: {
+                    popup: 'animated fadeInDown faster',
+                    title: 'fw-bold fs-5',
+                }
+            });
+        @endif
+
+        @if (session('ok'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: "{{ session('ok') }}",
+                iconColor: '#f1c40f',
+                background: '#fff',
+                color: '#333',
+                timer: 2000,
+                showConfirmButton: false,
+                customClass: {
+                    popup: 'animated fadeInDown faster',
+                    title: 'fw-bold fs-5',
+                }
+            });
+        @endif
+
+        // ❌ Notifikasi Error
+        @if (session('error'))
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: "{{ session('error') }}",
+                iconColor: '#e74c3c',
+                background: '#fff',
+                color: '#333',
+                timer: 3000,
+                customClass: {
+                    popup: 'animated shakeX faster',
+                    title: 'fw-bold fs-5',
+                }
+            });
+        @endif
+    </script>
 
     @stack('scripts')
 

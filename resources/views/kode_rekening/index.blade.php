@@ -7,34 +7,6 @@
         <a href="{{ route('kode-rekenings.create') }}" class="btn btn-primary">+ Tambah Data</a>
     </div>
 
-    @if (session('success'))
-        <div class="sufee-alert alert with-close alert-success alert-dismissible fade show">
-            <span class="badge badge-pill badge-success">Success</span>
-            Data Berhasil Ditambahkan.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
-    @if (session('success-update'))
-        <div class="sufee-alert alert with-close alert-success alert-dismissible fade show">
-            <span class="badge badge-pill badge-success">Success</span>
-            Data Berhasil Diperbaharui.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
-    @if (session('success-delete'))
-        <div class="sufee-alert alert with-close alert-success alert-dismissible fade show">
-            <span class="badge badge-pill badge-success">Success</span>
-            Data Berhasil Diperbaharui.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
-
     <div class="table-responsive bg-white rounded shadow-sm">
         <table class="table table-striped">
             <thead>

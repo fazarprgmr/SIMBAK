@@ -7,34 +7,6 @@
         <div> <a href="{{ route('rka.create') }}" class="btn btn-primary btn-sm">+ Tambah Data</a></div>
     </div>
 
-    @if (session('success'))
-        <div class="sufee-alert alert with-close alert-success alert-dismissible fade show">
-            <span class="badge badge-pill badge-success">Success</span>
-            Data Berhasil Ditambahkan.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
-    @if (session('success-update'))
-        <div class="sufee-alert alert with-close alert-success alert-dismissible fade show">
-            <span class="badge badge-pill badge-success">Success</span>
-            Data Berhasil Diperbaharui.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
-    @if (session('ok'))
-        <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
-            <span class="badge badge-pill badge-danger">Success</span>
-            Data Berhasil Dihapus.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
-
     <form class="row g-2 mb-3">
         <div class="col-auto"> <input class="form-control" name="search" placeholder="Cari kode/uraian"
                 value="{{ request('search') }}"> </div>
@@ -58,9 +30,10 @@
                         <td>{{ $rka->sub_uraian }}</td>
                         <td class="text-end"> <a href="{{ route('rka.edit', $rka) }}"
                                 class="btn btn-sm btn-warning">Edit</a>
-                            <form action="{{ route('rka.destroy', $rka) }}" method="POST" class="d-inline"
-                                onsubmit="return confirm('Hapus data?')"> @csrf @method('DELETE') <button
-                                    class="btn btn-sm btn-outline-danger">Hapus</button> </form>
+                            <form action="{{ route('rka.destroy', $rka) }}" method="POST" class="d-inline delete-form">
+                                @csrf 
+                                @method('DELETE') 
+                                <button type="button" class="btn btn-danger btn-sm delete-btn">Hapus</button> </form>
                         </td>
                 </tr> @empty <tr>
                         <td colspan="7" class="text-center text-muted">Belum ada data</td>

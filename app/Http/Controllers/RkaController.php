@@ -161,7 +161,7 @@ class RkaController extends Controller
 
         return \Barryvdh\DomPDF\Facade\Pdf::loadView('rka.pdf', [
             'grouped' => $grouped,
-            'periodeText' => mb_strtoupper($periodeText),
+            'periodeText' => ucfirst($periodeText),
         ])
             ->setPaper('folio', 'landscape')
             ->set_option('dpi', 96)
@@ -186,7 +186,7 @@ class RkaController extends Controller
         // Sama kayak exportPdf
         $grouped = $this->groupData($items);
 
-        $periodeText = strtoupper(
+        $periodeText = ucfirst(
             \Carbon\Carbon::createFromDate($tahun, $bulan, 1)
                 ->locale('id') // paksa bahasa Indonesia
                 ->translatedFormat('F Y')

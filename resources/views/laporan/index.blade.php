@@ -15,7 +15,7 @@
                             <option value="">Semua Bulan</option>
                             @for ($i = 1; $i <= 12; $i++)
                                 <option value="{{ $i }}" {{ request('bulan') == $i ? 'selected' : '' }}>
-                                    {{ \Carbon\Carbon::create()->month($i)->translatedFormat('F') }}
+                                    {{ ucfirst(\Carbon\Carbon::create()->month($i)->translatedFormat('F')) }}
                                 </option>
                             @endfor
                         </select>
