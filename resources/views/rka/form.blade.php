@@ -113,6 +113,10 @@
 
                                             <label class="form-check-label">Detail</label>
                                         </div>
+
+                                        @error("{$key}_mode")
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </td>
                                     <td>
                                         <input type="number" step="0.01" name="{{ $key }}_jumlah"

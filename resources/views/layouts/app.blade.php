@@ -25,43 +25,6 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <body>
-
-    @if (session('success'))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil!',
-                text: "{{ session('success') }}",
-                timer: 2000,
-                showConfirmButton: false
-            });
-        </script>
-    @endif
-
-    @if (session('success-update'))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil!',
-                text: "{{ session('success-update') }}",
-                timer: 2000,
-                showConfirmButton: false
-            });
-        </script>
-    @endif
-
-    @if (session('ok'))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil!',
-                text: "{{ session('ok') }}",
-                timer: 2000,
-                showConfirmButton: false
-            });
-        </script>
-    @endif
-
     <!-- Sidebar -->
     <aside id="left-panel" class="left-panel">
         <nav class="navbar navbar-expand-sm navbar-default">
@@ -227,7 +190,8 @@
                 background: '#fff',
                 color: '#333',
                 timer: 2000,
-                showConfirmButton: false,
+                showConfirmButton: true,
+                confirmButtonText: 'OK',
                 customClass: {
                     popup: 'animated fadeInDown faster',
                     title: 'fw-bold fs-5',
@@ -238,19 +202,22 @@
         @if (session('success-update'))
             Swal.fire({
                 icon: 'success',
-                title: 'Data Diperbarui!',
+                title: 'Berhasil!',
                 text: "{{ session('success-update') }}",
                 iconColor: '#3498db',
                 background: '#fff',
                 color: '#333',
-                timer: 2000,
-                showConfirmButton: false,
+                timer: 2000, 
+                showConfirmButton: true, 
+                confirmButtonText: 'OK',
                 customClass: {
                     popup: 'animated fadeInDown faster',
                     title: 'fw-bold fs-5',
                 }
             });
         @endif
+
+
 
         @if (session('ok'))
             Swal.fire({
@@ -261,26 +228,10 @@
                 background: '#fff',
                 color: '#333',
                 timer: 2000,
-                showConfirmButton: false,
+                showConfirmButton: true,
+                confirmButtonText: 'OK',
                 customClass: {
                     popup: 'animated fadeInDown faster',
-                    title: 'fw-bold fs-5',
-                }
-            });
-        @endif
-
-        // ❌ Notifikasi Error
-        @if (session('error'))
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: "{{ session('error') }}",
-                iconColor: '#e74c3c',
-                background: '#fff',
-                color: '#333',
-                timer: 3000,
-                customClass: {
-                    popup: 'animated shakeX faster',
                     title: 'fw-bold fs-5',
                 }
             });

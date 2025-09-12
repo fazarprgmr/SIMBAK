@@ -2,6 +2,25 @@
 @section('title', 'Data Pemasukan Barang')
 
 @section('content')
+
+    @php
+        $namaBulan = [
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember',
+        ];
+    @endphp
+
+
     <div class="d-flex justify-content-between mb-3">
         <h4>📄 Data Pemasukan Barang</h4>
         <div> <a href="{{ route('rka.create') }}" class="btn btn-primary btn-sm">+ Tambah Data</a></div>
@@ -16,24 +35,31 @@
         <table class="table table-striped align-middle mb-0">
             <thead class="table-light">
                 <tr>
+                    <th>No</th>
                     <th>Kode Rekening</th>
                     <th>Uraian</th>
                     <th>Sub Uraian</th>
+                    <th>Bulan</th>
+                    <th>Tahun</th>
                     <th class="text-end">Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse($rkas as $rka)
                     <tr>
+                        <td>{{ $loop->iteration + ($rkas->currentPage() - 1) * $rkas->perPage() }}</td> 
                         <td>{{ $rka->kode_rekening }}</td>
                         <td>{{ $rka->uraian }}</td>
                         <td>{{ $rka->sub_uraian }}</td>
+                        <td>{{ $namaBulan[$rka->bulan] ?? '-' }}</td>
+                        <td>{{ $rka->tahun }}</td>
                         <td class="text-end"> <a href="{{ route('rka.edit', $rka) }}"
                                 class="btn btn-sm btn-warning">Edit</a>
                             <form action="{{ route('rka.destroy', $rka) }}" method="POST" class="d-inline delete-form">
-                                @csrf 
-                                @method('DELETE') 
-                                <button type="button" class="btn btn-danger btn-sm delete-btn">Hapus</button> </form>
+                                @csrf
+                                @method('DELETE')
+                                <button type="button" class="btn btn-danger btn-sm delete-btn">Hapus</button>
+                            </form>
                         </td>
                 </tr> @empty <tr>
                         <td colspan="7" class="text-center text-muted">Belum ada data</td>
