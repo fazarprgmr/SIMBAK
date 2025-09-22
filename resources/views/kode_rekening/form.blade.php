@@ -2,6 +2,17 @@
 @section('title', $item->exists ? 'Edit Kode Rekening' : 'Tambah Kode Rekening')
 
 @section('content')
+
+    {{-- Petunjuk Penggunaan --}}
+    <div class="alert alert-info">
+        <strong>ℹ️ Petunjuk Penggunaan:</strong>
+        <ul class="mb-0">
+            <li><strong>Kode Rekening</strong> isi Kode Rekening Menggunakan angka.</li>
+            <li> <strong>Kode Rekening</strong> gunakan - jika Uraian tidak memiliki Kode Rekening</li>
+            <li><strong>Uraian</strong> Wajib di isi bisa dengan kombinasi huruf dan angka</li>
+        </ul>
+    </div>
+
     <h4>{{ $item->exists ? 'Edit' : 'Tambah' }} Kode Rekening</h4>
 
     <form action="{{ $item->exists ? route('kode-rekenings.update', $item) : route('kode-rekenings.store') }}" method="POST">

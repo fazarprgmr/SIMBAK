@@ -22,9 +22,9 @@
                         <td>{{ $item->nama }}</td>
                         <td class="text-end">
                             <a href="{{ route('satuans.edit', $item) }}" class="btn btn-sm btn-warning">Edit</a>
-                            <form action="{{ route('satuans.destroy', $item) }}" method="POST" class="d-inline">
+                            <form action="{{ route('satuans.destroy', $item) }}" method="POST" class="d-inline delete-form">
                                 @csrf @method('DELETE')
-                                <button class="btn btn-sm btn-danger" onclick="return confirm('Hapus?')">Hapus</button>
+                                <button type="button" class="btn btn-danger btn-sm delete-btn">Hapus</button>
                             </form>
                         </td>
                     </tr>

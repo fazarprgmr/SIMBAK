@@ -20,7 +20,10 @@ class RkaController extends Controller
                 ->orWhere('uraian', 'like', "%$s%")
                 ->orWhere('sub_uraian', 'like', "%$s%"));
         }
-        $rkas = $q->orderBy('bulan', 'asc')->paginate(10)->withQueryString();
+        $rkas = $q->orderBy('bulan', 'desc')  // bulan terbaru dulu
+            ->orderBy('id', 'desc')     // dalam bulan, data terbaru dulu
+            ->paginate(10)
+            ->withQueryString();
         return view('rka.index', compact('rkas'));
     }
 
@@ -40,25 +43,33 @@ class RkaController extends Controller
     {
         $data = $this->validateData($r);
 
-        if (!empty($data['kode_rekening'])) {
-            $kode = \App\Models\KodeRekening::where('kode', $data['kode_rekening'])->first();
+        // simpan id, bukan kode
+        $data['kode_rekening_id'] = $r->kode_rekening_id;
+
+        // ambil uraian dari input kalau kosong, fallback ke tabel kode_rekenings
+        if ($data['kode_rekening_id']) {
+            $kode = KodeRekening::find($data['kode_rekening_id']);
             if ($kode) {
+                $data['kode_rekening'] = $kode->kode;
                 $data['uraian'] = $kode->uraian;
             }
+        } else {
+            $data['kode_rekening'] = '-';
+            $data['uraian'] = $r->uraian;
         }
 
-
-        // Gunakan bulan yang dipilih user, kalau kosong fallback bulan sekarang
-        $now = Carbon::now();
+        // set bulan & tahun
+        $now = now();
         $data['bulan'] = $r->bulan ?? $now->month;
         $data['tahun'] = $now->year;
 
-
         $data = Rka::withTotals($data);
+        $data['kode_rekening_id'] = $r->kode_rekening_id;
         Rka::create($data);
 
         return redirect()->route('rka.index')->with('success', 'Data berhasil ditambahkan.');
     }
+
 
     public function edit(Rka $rka)
     {
@@ -72,24 +83,33 @@ class RkaController extends Controller
     {
         $data = $this->validateData($r);
 
-        if (!empty($data['kode_rekening'])) {
-            $kode = \App\Models\KodeRekening::where('kode', $data['kode_rekening'])->first();
+        // simpan id, bukan kode
+        $data['kode_rekening_id'] = $r->kode_rekening_id;
+
+        // ambil uraian dari input kalau kosong, fallback ke tabel kode_rekenings
+        if ($data['kode_rekening_id']) {
+            $kode = KodeRekening::find($data['kode_rekening_id']);
             if ($kode) {
+                $data['kode_rekening'] = $kode->kode;
                 $data['uraian'] = $kode->uraian;
             }
+        } else {
+            $data['kode_rekening'] = '-';
+            $data['uraian'] = $r->uraian;
         }
 
-        // Gunakan bulan yang dipilih user, kalau kosong fallback bulan sekarang
-        $now = Carbon::now();
+        // set bulan & tahun
+        $now = now();
         $data['bulan'] = $r->bulan ?? $now->month;
         $data['tahun'] = $now->year;
 
-
         $data = Rka::withTotals($data);
+        $data['kode_rekening_id'] = $r->kode_rekening_id;
         $rka->update($data);
 
         return redirect()->route('rka.index')->with('success-update', 'Data berhasil diperbarui.');
     }
+
 
     public function destroy(Rka $rka)
     {
@@ -100,11 +120,17 @@ class RkaController extends Controller
     private function validateData(Request $r): array
     {
         $rules = [
+            'kode_rekening_id' => ['nullable', 'exists:kode_rekenings,id'],
             'kode_rekening' => ['nullable', 'string', 'max:50'],
-            'uraian' => ['nullable', 'string', 'max:255'],
+            'uraian' => [
+                function ($attribute, $value, $fail) use ($r) {
+                    if (empty($r->kode_rekening_id) && empty($value)) {
+                        $fail('Uraian harus diisi jika tidak memilih kode rekening.');
+                    }
+                }
+            ],
             'sub_uraian' => ['nullable', 'string', 'max:255'],
         ];
-
 
         foreach (['saldo_awal', 'pembelian', 'saldo_akhir', 'rusak', 'beban'] as $sec) {
             $rules[$sec . '_mode'] = ['required', 'in:total,detail'];
@@ -116,6 +142,8 @@ class RkaController extends Controller
 
         return $r->validate($rules);
     }
+
+
 
     /**
      * 🔹 Halaman Laporan (Filter Bulan/Tahun)
@@ -250,8 +278,13 @@ class RkaController extends Controller
         foreach ($items as $item) {
             $uraian = $item->uraian ?: $lastUraian;
 
-            if (!isset($grouped[$uraian])) {
-                $grouped[$uraian] = [
+            // Gunakan kombinasi kode_rekening + uraian sebagai key
+            $key = $item->kode_rekening . '|' . $uraian;
+
+            if (!isset($grouped[$key])) {
+                $grouped[$key] = [
+                    'uraian' => $uraian,
+                    'kode_rekening' => $item->kode_rekening,
                     'items' => [],
                     'totals' => [
                         'saldo_awal_total' => 0,
@@ -274,51 +307,20 @@ class RkaController extends Controller
                 $normalize($item, $sec);
             }
 
-            // Mode Beban
-            if ($item->beban_mode === 'total') {
-                // Ambil dari database langsung
-                $item->beban_total  = (float)($item->beban_total ?? 0);
-                $item->beban_jumlah = (float)($item->beban_jumlah ?? 0);
-                $item->beban_harga  = (float)($item->beban_harga ?? 0);
-                $item->beban_satuan = $item->beban_satuan ?? '';
-            } else {
-                // Hitung kalau mode detail
-                $beban_jumlah = ($item->saldo_awal_jumlah ?? 0)
-                    + ($item->pembelian_jumlah ?? 0)
-                    - ($item->saldo_akhir_jumlah ?? 0)
-                    - ($item->rusak_jumlah ?? 0);
-
-                $beban_harga = $item->saldo_awal_harga
-                    ?: $item->pembelian_harga
-                    ?: $item->saldo_akhir_harga
-                    ?: $item->rusak_harga
-                    ?: 0;
-
-                $item->beban_jumlah = $beban_jumlah;
-                $item->beban_harga  = $beban_harga;
-                $item->beban_total  = $beban_jumlah * $beban_harga;
-                $item->beban_satuan = $item->saldo_awal_satuan
-                    ?: $item->pembelian_satuan
-                    ?: $item->saldo_akhir_satuan
-                    ?: $item->rusak_satuan
-                    ?: '';
-            }
-
-            // Tambah ke grouped
-            $grouped[$uraian]['items'][] = $item;
+            $grouped[$key]['items'][] = $item;
 
             if (!empty($item->sub_uraian)) {
-                $grouped[$uraian]['hasSub'] = true;
+                $grouped[$key]['hasSub'] = true;
             }
 
-            // Total akumulasi
             foreach (['saldo_awal', 'pembelian', 'saldo_akhir', 'rusak', 'beban'] as $sec) {
-                $grouped[$uraian]['totals'][$sec . '_total'] += $item->{$sec . '_total'} ?? 0;
-                $grouped[$uraian]['totals'][$sec . '_jumlah'] += $item->{$sec . '_jumlah'} ?? 0;
+                $grouped[$key]['totals'][$sec . '_total'] += $item->{$sec . '_total'} ?? 0;
+                $grouped[$key]['totals'][$sec . '_jumlah'] += $item->{$sec . '_jumlah'} ?? 0;
             }
 
             $lastUraian = $uraian;
         }
+
 
         return $grouped;
     }

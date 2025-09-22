@@ -142,7 +142,7 @@
 
             {{-- Baris utama pakai total --}}
             <tr style="font-weight:bold;background:#f0f0f0;">
-                <td class="left">{{ $first->kode_rekening }}</td>
+                <td class="left">{{ $first->kode_rekening === '-' ? '' : $first->kode_rekening }}</td>
                 <td class="left">{{ $first->uraian }}</td>
                 <td></td>
 
@@ -271,7 +271,7 @@
             <p style="text-decoration: underline; white-space: nowrap;">
                 SUTRISNO
             </p>
-            <p>19721228 200701 1 005</p>
+            <p>NIP. 19721228 200701 1 005</p>
         </td>
 
     </tr>

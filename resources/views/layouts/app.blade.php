@@ -49,7 +49,7 @@
                     </li>
                     <li class="{{ isActive(['kode-rekenings.*']) }}">
                         <a href="{{ route('kode-rekenings.index') }}"><i class="menu-icon fa fa-book"></i> Kode
-                            Rekening</a>
+                            Rekening & Uraian</a>
                     </li>
                     <li class="{{ isActive(['satuans.*']) }}">
                         <a href="{{ route('satuans.index') }}"><i class="menu-icon fa fa-cube"></i> Satuan Barang</a>

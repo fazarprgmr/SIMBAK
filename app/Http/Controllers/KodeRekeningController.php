@@ -20,15 +20,23 @@ class KodeRekeningController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'kode' => 'required|unique:kode_rekenings',
-            'uraian' => 'required'
-        ]);
+{
+    $request->validate([
+        'kode' => [
+            'required',
+            function ($attribute, $value, $fail) {
+                if ($value !== '-' && \App\Models\KodeRekening::where('kode', $value)->exists()) {
+                    $fail('Kode sudah ada.');
+                }
+            },
+        ],
+        'uraian' => 'required'
+    ]);
 
-        KodeRekening::create($request->only('kode', 'uraian'));
-        return redirect()->route('kode-rekenings.index')->with('success', 'Kode Rekening berhasil ditambahkan');
-    }
+    KodeRekening::create($request->only('kode', 'uraian'));
+    return redirect()->route('kode-rekenings.index')->with('success', 'Kode Rekening berhasil ditambahkan');
+}
+
 
     public function edit(KodeRekening $kodeRekening)
     {
@@ -36,15 +44,24 @@ class KodeRekeningController extends Controller
     }
 
     public function update(Request $request, KodeRekening $kodeRekening)
-    {
-        $request->validate([
-            'kode' => 'required|unique:kode_rekenings,kode,' . $kodeRekening->id,
-            'uraian' => 'required'
-        ]);
+{
+    $request->validate([
+        'kode' => [
+            'required',
+            function ($attribute, $value, $fail) use ($kodeRekening) {
+                if ($value !== '-' && \App\Models\KodeRekening::where('kode', $value)
+                        ->where('id', '!=', $kodeRekening->id)
+                        ->exists()) {
+                    $fail('Kode sudah ada.');
+                }
+            },
+        ],
+        'uraian' => 'required'
+    ]);
 
-        $kodeRekening->update($request->only('kode', 'uraian'));
-        return redirect()->route('kode-rekenings.index')->with('success-update', 'Kode Rekening berhasil diupdate');
-    }
+    $kodeRekening->update($request->only('kode', 'uraian'));
+    return redirect()->route('kode-rekenings.index')->with('success-update', 'Kode Rekening berhasil diupdate');
+}
 
     public function destroy(KodeRekening $kodeRekening)
     {

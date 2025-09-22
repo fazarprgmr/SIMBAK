@@ -13,6 +13,7 @@ class Rka extends Model
 
 
     protected $fillable = [
+        'kode_rekening_id',
         'bulan',
         'kode_rekening',
         'uraian',
@@ -43,6 +44,12 @@ class Rka extends Model
         'beban_harga',
         'beban_total',
     ];
+
+    public function kodeRekening()
+{
+    return $this->belongsTo(KodeRekening::class);
+}
+
 
 
     /**

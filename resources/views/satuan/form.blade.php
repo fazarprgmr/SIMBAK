@@ -2,6 +2,16 @@
 @section('title', $item->exists ? 'Edit Satuan Barang' : 'Tambah Satuan Barang')
 
 @section('content')
+
+{{-- Petunjuk Penggunaan --}}
+    <div class="alert alert-info">
+        <strong>ℹ️ Petunjuk Penggunaan:</strong>
+        <ul class="mb-0">
+            <li><strong>Satuan Barang</strong> Wajib di isi bisa dengan kombinasi huruf dan angka</li>
+            <li><strong>Contoh Satuan Barang:</strong> PAK, LUSIN, RIM, DLL</li>
+        </ul>
+    </div>
+
     <h4>{{ $item->exists ? 'Edit' : 'Tambah' }} Satuan Barang</h4>
 
     <form action="{{ $item->exists ? route('satuans.update', $item) : route('satuans.store') }}" method="POST">

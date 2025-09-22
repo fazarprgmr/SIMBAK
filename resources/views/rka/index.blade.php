@@ -35,8 +35,6 @@
         <table class="table table-striped align-middle mb-0">
             <thead class="table-light">
                 <tr>
-                    <th>No</th>
-                    <th>Kode Rekening</th>
                     <th>Uraian</th>
                     <th>Sub Uraian</th>
                     <th>Bulan</th>
@@ -47,20 +45,22 @@
             <tbody>
                 @forelse($rkas as $rka)
                     <tr>
-                        <td>{{ $loop->iteration + ($rkas->currentPage() - 1) * $rkas->perPage() }}</td> 
-                        <td>{{ $rka->kode_rekening }}</td>
                         <td>{{ $rka->uraian }}</td>
                         <td>{{ $rka->sub_uraian }}</td>
                         <td>{{ $namaBulan[$rka->bulan] ?? '-' }}</td>
                         <td>{{ $rka->tahun }}</td>
-                        <td class="text-end"> <a href="{{ route('rka.edit', $rka) }}"
-                                class="btn btn-sm btn-warning">Edit</a>
-                            <form action="{{ route('rka.destroy', $rka) }}" method="POST" class="d-inline delete-form">
-                                @csrf
-                                @method('DELETE')
-                                <button type="button" class="btn btn-danger btn-sm delete-btn">Hapus</button>
-                            </form>
+                        <td class="text-end">
+                            <div class="d-flex justify-content-end gap-1">
+                                <a href="{{ route('rka.edit', $rka) }}" class="btn btn-sm btn-warning">Edit</a>
+
+                                <form action="{{ route('rka.destroy', $rka) }}" method="POST" class="delete-form">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="button" class="btn btn-danger btn-sm delete-btn">Hapus</button>
+                                </form>
+                            </div>
                         </td>
+
                 </tr> @empty <tr>
                         <td colspan="7" class="text-center text-muted">Belum ada data</td>
                     </tr>
