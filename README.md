@@ -69,7 +69,7 @@ Password: admin123
 
 ### 3. Tampilan Website
 
-<img width="1920" height="1080" alt="Screenshot 2025-09-07 202411" src="https://github.com/user-attachments/assets/42760b85-f95a-4bc9-bbf8-c18d91d0c54a" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/b7123317-8a24-4470-9dd0-4fadcaac9588" />
 <img width="1920" height="1080" alt="Screenshot 2025-09-07 202426" src="https://github.com/user-attachments/assets/819aa34b-eaec-4c45-b992-0b2287ed41bb" />
 <img width="1920" height="1080" alt="Screenshot 2025-09-07 202433" src="https://github.com/user-attachments/assets/9a08cea5-4186-431f-a2d9-9fbcff7e3861" />
 <img width="1920" height="1080" alt="Screenshot 2025-09-07 202440" src="https://github.com/user-attachments/assets/8f439c8f-e3dc-48d4-ae95-3978e634c2dd" />
