@@ -6,34 +6,47 @@ use App\Models\Rka;
 use App\Models\KodeRekening;
 use App\Models\Satuan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        // Data dropdown filter
+        $namaBulan = [
+            1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr',
+            5 => 'Mei', 6 => 'Jun', 7 => 'Jul', 8 => 'Agu',
+            9 => 'Sep', 10 => 'Okt', 11 => 'Nov', 12 => 'Des'
+        ];
+
+        // Ambil bulan & tahun dari request (default bulan & tahun sekarang)
+        $bulanDipilih = $request->get('bulan', now()->month);
+        $tahunDipilih = $request->get('tahun', now()->year);
+
         // Total data
         $totalRka = Rka::count();
         $totalKode = KodeRekening::count();
         $totalSatuan = Satuan::count();
-        $laporanBulanIni = Rka::whereMonth('created_at', now()->month)
-            ->whereYear('created_at', now()->year)
+
+        // Total laporan bulan yang dipilih (pakai field bulan & tahun, bukan created_at)
+        $laporanBulanIni = Rka::where('bulan', $bulanDipilih)
+            ->where('tahun', $tahunDipilih)
             ->count();
 
-        // Grafik pembelian per bulan
-        $pembelian = Rka::selectRaw('MONTH(created_at) as bulan, SUM(pembelian_total) as total')
-            ->groupByRaw('MONTH(created_at)')
-            ->orderByRaw('MONTH(created_at)')
+        // Grafik pembelian per bulan (pakai field bulan & tahun inputan)
+        $pembelian = Rka::selectRaw('bulan, SUM(pembelian_total) as total')
+            ->where('tahun', $tahunDipilih)
+            ->groupBy('bulan')
+            ->orderBy('bulan')
             ->pluck('total', 'bulan');
 
         $bulan = [];
         $totalPembelian = [];
         foreach (range(1, 12) as $i) {
-            $bulan[] = date('M', mktime(0, 0, 0, $i, 1));
+            $bulan[] = $namaBulan[$i];
             $totalPembelian[] = $pembelian[$i] ?? 0;
         }
 
-        // Barang terbaru
+        // Barang terbaru (masih bisa pakai created_at untuk urutan)
         $barangTerbaru = Rka::orderBy('created_at', 'desc')->take(5)->get();
 
         // Barang rusak/stock rendah
@@ -47,7 +60,10 @@ class DashboardController extends Controller
             'bulan',
             'totalPembelian',
             'barangTerbaru',
-            'barangRusak'
+            'barangRusak',
+            'bulanDipilih',
+            'tahunDipilih',
+            'namaBulan'
         ));
     }
 }

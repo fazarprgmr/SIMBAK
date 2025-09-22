@@ -22,6 +22,7 @@
         </style>
 
         <!-- Shortcut Menu -->
+        
         <div class="row mb-4">
             <div class="col-md-3">
                 <a href="{{ route('rka.create') }}" class="text-decoration-none">
@@ -146,6 +147,7 @@
                                     <tr>
                                         <td>{{ $item->kode_rekening }}</td>
                                         <td>{{ $item->sub_uraian }}</td>
+                                        
                                         <td>{{ $item->created_at->format('d M Y') }}</td>
                                     </tr>
                                 @endforeach
