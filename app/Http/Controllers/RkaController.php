@@ -29,7 +29,7 @@ class RkaController extends Controller
 
     public function create()
     {
-        $kodeRekenings = KodeRekening::orderBy('kode')->get();
+        $kodeRekenings = KodeRekening::orderBy('created_at', 'desc')->get();
         $satuans = \App\Models\Satuan::orderBy('nama')->get();
 
         return view('rka.form', [
@@ -73,7 +73,7 @@ class RkaController extends Controller
 
     public function edit(Rka $rka)
     {
-        $kodeRekenings = KodeRekening::orderBy('kode')->get();
+        $kodeRekenings = KodeRekening::orderBy('created_at', 'desc')->get();
         $satuans = \App\Models\Satuan::orderBy('nama')->get();
 
         return view('rka.form', compact('rka', 'kodeRekenings', 'satuans'));

@@ -83,7 +83,7 @@
 
                     <div class="row g-3 mb-4">
                         <div class="col-md-8">
-                            <label class="form-label">Kode Rekening</label>
+                            <label class="form-label">Kode Rekening & Uraian</label>
                             <select name="kode_rekening_id" class="form-select">
                                 <option value="">-- Tidak Ada / Kosong --</option>
                                 @foreach ($kodeRekenings as $kr)
