@@ -279,7 +279,7 @@ class RkaController extends Controller
             $uraian = $item->uraian ?: $lastUraian;
 
             // Gunakan kombinasi kode_rekening + uraian sebagai key
-            $key = $item->kode_rekening . '|' . $uraian;
+            $key = $item->kode_rekening_id . '|' . $uraian;
 
             if (!isset($grouped[$key])) {
                 $grouped[$key] = [
